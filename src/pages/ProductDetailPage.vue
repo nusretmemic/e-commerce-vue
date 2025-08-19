@@ -40,6 +40,8 @@ import { useRoute } from "vue-router";
 import { useProductsStore } from "../stores/products";
 import { useCartStore } from "../stores/cart";
 import type { Product } from "../types";
+import { useToastStore } from "../stores/toast";
+const toast = useToastStore();
 
 const route = useRoute();
 const id = Number(route.params.id);
@@ -53,7 +55,11 @@ const qty = ref(1);
 onMounted(async () => {
   product.value = await store.fetchById(id);
 });
+
 function addToCart() {
-  if (product.value) cart.add(product.value, qty.value);
+  if (product.value) {
+    cart.add(product.value, qty.value);
+    toast.show("Added to cart", { type: "success" });
+  }
 }
 </script>

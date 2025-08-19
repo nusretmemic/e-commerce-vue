@@ -31,11 +31,16 @@
 <script setup lang="ts">
 import type { Product } from "../types";
 import { useCartStore } from "../stores/cart";
+import { useToastStore } from "../stores/toast";
+const toast = useToastStore();
 
 const props = defineProps<{ product: Product }>();
 const cart = useCartStore();
 
 function addToCart() {
   cart.add(props.product, 1);
+  toast.show(`Added ${props.product.title} to cart`, {
+    type: "success",
+  });
 }
 </script>

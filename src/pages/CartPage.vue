@@ -9,9 +9,18 @@
         :key="it.product.id"
         class="grid grid-cols-[1fr_120px_120px_40px] items-center gap-2 border border-gray-200 rounded-2xl p-2"
       >
-        <RouterLink :to="`/product/${it.product.id}`" class="hover:underline">{{
-          it.product.title
-        }}</RouterLink>
+        <div class="flex items-center gap-2">
+          <img
+            :src="it.product.images[0]"
+            :alt="it.product.title"
+            class="w-16 h-16 object-cover rounded-lg"
+          />
+          <RouterLink
+            :to="`/product/${it.product.id}`"
+            class="hover:underline"
+            >{{ it.product.title }}</RouterLink
+          >
+        </div>
         <div>
           <input
             type="number"
