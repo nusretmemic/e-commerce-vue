@@ -7,7 +7,7 @@ A simple e-commerce shop built with Vue 3, Vite, TypeScript, Pinia, Vue Router, 
 1. Clone the repository:
 
 ```bash
-   git clone https://github.com/your-username/e-commerce-vue.git
+   git clone https://github.com/nusretmemic/e-commerce-vue.git
    cd e-commerce-vue
 ```
 
