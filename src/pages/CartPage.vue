@@ -1,38 +1,47 @@
 <template>
   <section>
-    <h1>Your Cart</h1>
-    <div v-if="!cart.items.length">Cart is empty.</div>
+    <h1 class="text-xl font-semibold mb-3">Your Cart</h1>
+    <div v-if="!cart.items.length" class="text-gray-600">Cart is empty.</div>
 
-    <ul v-else class="cart-list">
-      <li v-for="it in cart.items" :key="it.product.id" class="row">
-        <RouterLink :to="`/product/${it.product.id}`" class="title">{{
+    <ul v-else class="grid gap-2">
+      <li
+        v-for="it in cart.items"
+        :key="it.product.id"
+        class="grid grid-cols-[1fr_120px_120px_40px] items-center gap-2 border border-gray-200 rounded-2xl p-2"
+      >
+        <RouterLink :to="`/product/${it.product.id}`" class="hover:underline">{{
           it.product.title
         }}</RouterLink>
-        <div class="qty">
+        <div>
           <input
             type="number"
             min="1"
             :value="it.qty"
             @input="onQty(it.product.id, $event)"
+            class="input"
           />
         </div>
-        <div class="price">€{{ (it.product.price * it.qty).toFixed(2) }}</div>
-        <button class="remove" @click="cart.remove(it.product.id)">×</button>
+        <div class="font-semibold text-right">
+          €{{ (it.product.price * it.qty).toFixed(2) }}
+        </div>
+        <button class="btn" @click="cart.remove(it.product.id)">×</button>
       </li>
     </ul>
 
-    <footer v-if="cart.items.length" class="summary">
+    <footer
+      v-if="cart.items.length"
+      class="flex flex-wrap items-center gap-3 justify-end mt-4"
+    >
       <div>Total items: {{ cart.totalQuantity }}</div>
-      <div>Total: €{{ cart.totalPrice.toFixed(2) }}</div>
-      <button @click="checkout">Checkout</button>
-      <button class="clear" @click="cart.clear()">Clear</button>
+      <div class="font-semibold">Total: €{{ cart.totalPrice.toFixed(2) }}</div>
+      <button class="btn btn-primary" @click="checkout">Checkout</button>
+      <button class="btn" @click="cart.clear()">Clear</button>
     </footer>
   </section>
 </template>
 
 <script setup lang="ts">
 import { useCartStore } from "../stores/cart";
-
 const cart = useCartStore();
 
 function onQty(id: number, evt: Event) {
@@ -45,48 +54,3 @@ function checkout() {
   alert("Pretend to checkout 🙂");
 }
 </script>
-
-<style scoped>
-.cart-list {
-  display: grid;
-  gap: 0.5rem;
-}
-.row {
-  display: grid;
-  grid-template-columns: 1fr 120px 120px 40px;
-  gap: 0.5rem;
-  align-items: center;
-  border: 1px solid #eee;
-  padding: 0.5rem 0.75rem;
-  border-radius: 10px;
-}
-.title {
-  text-decoration: none;
-}
-.qty input {
-  width: 100%;
-  padding: 0.35rem 0.45rem;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-}
-.price {
-  font-weight: 700;
-  text-align: right;
-}
-.remove {
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 0.2rem 0.5rem;
-  cursor: pointer;
-}
-.summary {
-  display: flex;
-  gap: 1rem;
-  align-items: center;
-  justify-content: flex-end;
-  margin-top: 1rem;
-}
-.clear {
-  opacity: 0.8;
-}
-</style>

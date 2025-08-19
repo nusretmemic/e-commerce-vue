@@ -1,32 +1,37 @@
 <template>
-  <section v-if="product" class="detail">
-    <div class="gallery">
-      <img :src="activeImage || product.thumbnail" :alt="product.title" />
-      <div class="thumbs">
+  <section v-if="product" class="grid md:grid-cols-2 gap-6">
+    <div>
+      <img
+        :src="activeImage || product.thumbnail"
+        :alt="product.title"
+        class="w-full rounded-2xl"
+      />
+      <div class="flex flex-wrap gap-2 mt-2">
         <button
           v-for="img in product.images || []"
           :key="img"
           @click="activeImage = img"
+          class="border border-gray-200 rounded-xl overflow-hidden p-0"
         >
-          <img :src="img" :alt="product.title" />
+          <img :src="img" :alt="product.title" class="w-20 h-20 object-cover" />
         </button>
       </div>
     </div>
 
-    <div class="info">
-      <h1>{{ product.title }}</h1>
-      <p class="brand" v-if="product.brand">{{ product.brand }}</p>
-      <p class="price">€{{ product.price.toFixed(2) }}</p>
-      <p class="desc">{{ product.description }}</p>
+    <div>
+      <h1 class="text-2xl font-semibold">{{ product.title }}</h1>
+      <p v-if="product.brand" class="text-gray-500">{{ product.brand }}</p>
+      <p class="text-xl font-bold my-2">€{{ product.price.toFixed(2) }}</p>
+      <p class="text-gray-700">{{ product.description }}</p>
 
-      <div class="actions">
-        <input type="number" min="1" v-model.number="qty" />
-        <button @click="addToCart">Add to cart</button>
+      <div class="flex items-center gap-2 mt-4">
+        <input type="number" min="1" v-model.number="qty" class="input w-24" />
+        <button class="btn btn-primary" @click="addToCart">Add to cart</button>
       </div>
     </div>
   </section>
   <p v-else-if="store.loading">Loading…</p>
-  <p v-else class="error">{{ store.error || "Not found" }}</p>
+  <p v-else class="text-red-600">{{ store.error || "Not found" }}</p>
 </template>
 
 <script setup lang="ts">
@@ -48,66 +53,7 @@ const qty = ref(1);
 onMounted(async () => {
   product.value = await store.fetchById(id);
 });
-
 function addToCart() {
   if (product.value) cart.add(product.value, qty.value);
 }
 </script>
-
-<style scoped>
-.detail {
-  display: grid;
-  grid-template-columns: 1.1fr 1fr;
-  gap: 1.5rem;
-}
-.gallery img {
-  width: 100%;
-  border-radius: 12px;
-}
-.thumbs {
-  display: flex;
-  gap: 0.5rem;
-  margin-top: 0.5rem;
-  flex-wrap: wrap;
-}
-.thumbs button {
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  overflow: hidden;
-  padding: 0;
-}
-.thumbs img {
-  width: 72px;
-  height: 72px;
-  object-fit: cover;
-  display: block;
-}
-.info h1 {
-  margin: 0 0 0.25rem;
-}
-.brand {
-  color: #555;
-}
-.price {
-  font-size: 1.25rem;
-  font-weight: 700;
-  margin: 0.5rem 0;
-}
-.actions {
-  display: flex;
-  gap: 0.5rem;
-  align-items: center;
-}
-.actions input {
-  width: 80px;
-  padding: 0.4rem 0.5rem;
-  border: 1px solid #ddd;
-  border-radius: 8px;
-}
-.actions button {
-  padding: 0.5rem 0.9rem;
-  border-radius: 8px;
-  border: 1px solid #ddd;
-  cursor: pointer;
-}
-</style>

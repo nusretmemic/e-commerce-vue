@@ -1,12 +1,29 @@
 <template>
-  <article class="card">
-    <RouterLink :to="`/product/${product.id}`" class="image-wrap">
-      <img :src="product.thumbnail" :alt="product.title" loading="lazy" />
+  <article class="card overflow-hidden flex flex-col relative h-75">
+    <RouterLink
+      :to="`/product/${product.id}`"
+      class="block aspect-video overflow-hidden"
+    >
+      <img
+        :src="product.thumbnail"
+        :alt="product.title"
+        loading="lazy"
+        class="w-full h-full object-cover"
+      />
     </RouterLink>
-    <div class="content">
-      <h3 class="title">{{ product.title }}</h3>
-      <p class="price">€{{ product.price.toFixed(2) }}</p>
-      <button @click="addToCart">Add to cart</button>
+    <div class="p-3 flex flex-col gap-2 mt-5">
+      <h3 class="text-sm text-gray-500 font-medium leading-snug line-clamp-2">
+        {{ product.title }}
+      </h3>
+      <p class="font-semibold">€{{ product.price.toFixed(2) }}</p>
+    </div>
+    <div class="px-3 absolute bottom-3 left-0 right-0">
+      <button
+        class="btn border-gray-500 hover:bg-gray-900 hover:text-white w-full"
+        @click="addToCart"
+      >
+        Add to cart
+      </button>
     </div>
   </article>
 </template>
@@ -22,47 +39,3 @@ function addToCart() {
   cart.add(props.product, 1);
 }
 </script>
-
-<style scoped>
-.card {
-  border: 1px solid #eee;
-  border-radius: 10px;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-}
-.image-wrap {
-  display: block;
-  aspect-ratio: 16/9;
-  overflow: hidden;
-}
-.image-wrap img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-.content {
-  padding: 0.75rem;
-  display: flex;
-  gap: 0.5rem;
-  align-items: center;
-  justify-content: space-between;
-}
-.title {
-  font-size: 0.95rem;
-  line-height: 1.3;
-}
-.price {
-  font-weight: 700;
-}
-button {
-  padding: 0.4rem 0.7rem;
-  border-radius: 8px;
-  border: 1px solid #ddd;
-  cursor: pointer;
-}
-button:hover {
-  background: #f7f7f7;
-}
-</style>

@@ -1,14 +1,16 @@
 <template>
-  <div class="container">
-    <header class="header">
-      <RouterLink to="/" class="brand">E-Commerce Shop</RouterLink>
-      <nav>
-        <RouterLink to="/">Products</RouterLink>
-        <RouterLink to="/cart">Cart ({{ cartCount }})</RouterLink>
+  <div class="container mx-auto">
+    <header class="flex items-center justify-between gap-4 py-4">
+      <RouterLink to="/" class="text-xl font-semibold"
+        >E-Commerce Shop</RouterLink
+      >
+      <nav class="flex items-center gap-3">
+        <RouterLink to="/" class="btn">Products</RouterLink>
+        <RouterLink to="/cart" class="btn">Cart ({{ cartCount }})</RouterLink>
       </nav>
     </header>
 
-    <main class="main">
+    <main class="py-4">
       <RouterView />
     </main>
   </div>
@@ -21,27 +23,3 @@ import { useCartStore } from "./stores/cart";
 const cart = useCartStore();
 const cartCount = computed(() => cart.totalQuantity);
 </script>
-
-<style scoped>
-.container {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 1rem;
-}
-.header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-}
-.header a {
-  margin-right: 1rem;
-  text-decoration: none;
-}
-.brand {
-  font-weight: 700;
-}
-.main {
-  margin-top: 1rem;
-}
-</style>
