@@ -64,11 +64,3 @@ Using [DummyJSON](https://dummyjson.com/docs/products):
 ## License
 
 MIT © 2025
-
-```
-
-```
-
-```
-
-```
