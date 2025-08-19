@@ -11,7 +11,7 @@
       >
         <div class="flex items-center gap-2">
           <img
-            :src="it.product.images[0]"
+            :src="it.product.images?.[0] ?? it.product.thumbnail ?? placeholder"
             :alt="it.product.title"
             class="w-16 h-16 object-cover rounded-lg"
           />
@@ -52,6 +52,10 @@
 <script setup lang="ts">
 import { useCartStore } from "../stores/cart";
 const cart = useCartStore();
+
+// small inline SVG as a fallback (no new file needed)
+const placeholder =
+  'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64"><rect width="100%" height="100%" fill="%23f3f4f6"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-size="10" fill="%239ca3af">No Image</text></svg>';
 
 function onQty(id: number, evt: Event) {
   const target = evt.target as HTMLInputElement;
