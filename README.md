@@ -33,6 +33,10 @@ A simple e-commerce shop built with Vue 3, Vite, TypeScript, Pinia, Vue Router, 
 - **Toasts**: lightweight global toaster (`stores/toast.ts` + `components/Toaster.vue`).
 - **Dark mode**: enable by adding `class="dark"` to `<html>` or wiring a toggle.
 
+## Live Demo
+
+Check out the live demo at [https://master.d1llrxyhz3p8gb.amplifyapp.com/](https://master.d1llrxyhz3p8gb.amplifyapp.com/).
+
 ## API
 
 Using [DummyJSON](https://dummyjson.com/docs/products):
